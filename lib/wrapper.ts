@@ -2,7 +2,7 @@
  * @Author: 吴占超
  * @Date: 2019-06-16 18:51:56
  * @Last Modified by: 吴占超
- * @Last Modified time: 2019-06-18 18:01:47
+ * @Last Modified time: 2019-06-18 20:32:58
  */
 import { Application, Router } from 'midway';
 import { WrapperOptions } from './interface';

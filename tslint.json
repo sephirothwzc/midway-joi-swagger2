@@ -1,5 +1,8 @@
 {
   "extends": [
     "tslint-midway-contrib"
-  ]
+  ],
+  "rules": {
+    "no-unused-expression": false
+  }
 }

@@ -30,12 +30,15 @@ module.exports = (app: any) => {
 示例：
 
 ```get path
+
 import {
   SwaggerJoiController as sjc,
   SwaggerJoiGet as sjg,
   SwaggerJoiPost as sjp
 } from 'midway-joi-swagger2';
 
+@sjc({ path: '/', api: 'home' })
+export class HomeController {
   @sjg({
     path: '/test/{id}',
     api: 'home',
@@ -48,6 +51,7 @@ import {
     },
     auth: 'ApiKeyAuth'
   })
+}
 ```
 
 ```post path
