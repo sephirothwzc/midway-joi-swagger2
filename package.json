@@ -1,0 +1,31 @@
+{
+  "name": "midway-joi-swagger2",
+  "version": "1.0.4",
+  "description": "midway joi swagger2 zhanchao.wu",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sephirothwzc/midway-joi-swagger2.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "midway-bin build -c"
+  },
+  "author": "zhanchao.wu@icloud.com",
+  "license": "MIT",
+  "dependencies": {
+    "@types/joi": "^14.3.3",
+    "@types/lodash": "^4.14.134",
+    "joi": "^14.3.1",
+    "joi-to-swagger": "^3.1.0",
+    "lodash": "^4.17.11",
+    "midway": "^1.6.3",
+    "tslint": "^5.17.0"
+  },
+  "private": false,
+  "devDependencies": {
+    "midway-bin": "^1.5.6",
+    "midway-mock": "^1.5.6",
+    "tslint-midway-contrib": "^1.5.0"
+  }
+}
