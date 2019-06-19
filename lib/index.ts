@@ -4,4 +4,11 @@ import {
   SwaggerJoiGet,
   SwaggerJoiPost
 } from './swagger-joi-controller';
-export { wrapper, SwaggerJoiController, SwaggerJoiGet, SwaggerJoiPost };
+import { swaggerConfig } from './interface';
+export {
+  wrapper,
+  SwaggerJoiController,
+  SwaggerJoiGet,
+  SwaggerJoiPost,
+  swaggerConfig
+};
