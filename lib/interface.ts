@@ -1,11 +1,10 @@
-import { KoaMiddleware } from 'midway';
-
 /*
  * @Author: 吴占超
  * @Date: 2019-06-16 19:11:39
  * @Last Modified by: 吴占超
  * @Last Modified time: 2019-06-18 14:08:35
  */
+import { KoaMiddleware } from 'midway';
 
 export interface swaggerConfig {
   title: string;
@@ -24,7 +23,6 @@ export interface WrapperOptions {
   swaggerJsonEndpoint?: string;
   swaggerHtmlEndpoint?: string;
   makeSwaggerRouter?: boolean;
-  securityDefinitions: any;
   [param: string]: any;
 }
 

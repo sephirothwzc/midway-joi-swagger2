@@ -61,13 +61,27 @@ const _paramsList = (parameters: any, type: string) => {
   return swaggerParams;
 };
 
+const _responsesBody = (body: any) => {
+  if (!body) {
+    return undefined;
+  }
+  const { swagger } = j2s(body);
+  return {
+    name: 'data',
+    description: 'response body',
+    schema: swagger,
+    in: 'body'
+  };
+};
+
 /**
  * 权限处理
  * @param auth
  */
 const _auth = (auth: string | string[]) => {
   if (!auth) {
-    return [{ Token: [] }];
+    // 获取默认
+    return [];
   }
   if (_.isArray(auth) && auth.length > 0) {
     const result = {};
@@ -124,7 +138,8 @@ const allSet = (paramIn: IMethodIn, method: string) => {
     query: _paramsList(paramIn.query, 'query'),
     body: _paramsBody(paramIn.body),
     formData: _paramsList(paramIn.formData, 'formData'),
-    security: _auth(paramIn.auth)
+    security: _auth(paramIn.auth),
+    responses: _responsesBody(paramIn.responses)
   });
   const realPath = convertPath(paramIn.path);
   addSchema(`[${paramIn.api}]${realPath}-[${method}]`.replace('//', '/'), {

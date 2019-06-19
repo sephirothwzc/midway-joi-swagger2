@@ -34,11 +34,9 @@ const swaggerJSON = (options: WrapperOptions, apiObjects: any) => {
       path = `${prefix}${path}`.replace('//', '/');
       const summary = _.get(value, 'summary', '');
       const apiDescription = _.get(value, 'description', summary);
-      const responses: IResponse = _.get(value, 'responses', {
-        200: {
-          description: 'success'
-        }
-      });
+      const responses: IResponse = {
+        200: _.get(value, 'responses', { description: 'success' })
+      };
       const {
         query = [],
         pathParams = [],
