@@ -2,7 +2,7 @@
  * @Author: 吴占超
  * @Date: 2019-06-16 19:31:10
  * @Last Modified by: 吴占超
- * @Last Modified time: 2019-06-18 20:33:57
+ * @Last Modified time: 2019-07-03 16:21:27
  * 生成swagger json doc
  */
 import * as _ from 'lodash';
@@ -64,6 +64,7 @@ const swaggerJSON = (options: WrapperOptions, apiObjects: any) => {
         tags,
         security
       };
+      // !resultJSON.tags.includes(tags[0]) && resultJSON.tags.push(tags[0]);
     })
     .value();
   return resultJSON;

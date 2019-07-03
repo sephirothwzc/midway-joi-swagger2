@@ -166,3 +166,7 @@ module.exports = () => {
 };
 
 ```
+
+ts 项目
+yarn build
+npm publish

@@ -2,10 +2,10 @@
  * @Author: 吴占超
  * @Date: 2019-06-16 10:25:21
  * @Last Modified by: 吴占超
- * @Last Modified time: 2019-06-18 20:33:01
+ * @Last Modified time: 2019-07-03 16:22:11
  */
 
-import { controller, get, post } from 'midway';
+import { controller, get, post, put, del } from 'midway';
 import * as _ from 'lodash';
 import { IApiObject, IMethodIn, IClassIn } from './interface';
 import * as j2s from 'joi-to-swagger';
@@ -119,6 +119,7 @@ const SwaggerJoiController = (paramIn: IClassIn): ClassDecorator => {
         '//',
         '/'
       );
+      paramIn.description && (apiObjects[p].tags = [paramIn.description]);
     });
   controllerSchema(paramIn.api, paramIn.path);
   return controller(convertPath(paramIn.path), paramIn.routerOptions);
@@ -161,4 +162,21 @@ const SwaggerJoiPost = (paramIn: IMethodIn) => {
   return post(realPath, paramIn.routerOptions);
 };
 
-export { SwaggerJoiController, SwaggerJoiGet, SwaggerJoiPost, apiObjects };
+const SwaggerJoiPut = (paramIn: IMethodIn) => {
+  const realPath = allSet(paramIn, 'put');
+  return put(realPath, paramIn.routerOptions);
+};
+
+const SwaggerJoiDel = (paramIn: IMethodIn) => {
+  const realPath = allSet(paramIn, 'del');
+  return del(realPath, paramIn.routerOptions);
+};
+
+export {
+  SwaggerJoiController,
+  SwaggerJoiGet,
+  SwaggerJoiPost,
+  SwaggerJoiPut,
+  SwaggerJoiDel,
+  apiObjects
+};

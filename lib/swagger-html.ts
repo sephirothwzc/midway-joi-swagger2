@@ -2,7 +2,7 @@
  * @Author: 吴占超
  * @Date: 2019-06-16 18:39:27
  * @Last Modified by: 吴占超
- * @Last Modified time: 2019-06-16 20:48:37
+ * @Last Modified time: 2019-07-03 16:30:07
  * 静态html
  */
 const swaggerHTML = (apiPath: string) =>
@@ -14,7 +14,7 @@ const swaggerHTML = (apiPath: string) =>
   <meta charset="UTF-8">
   <title>Swagger UI</title>
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700|Source+Code+Pro:300,600|Titillium+Web:400,600,700" rel="stylesheet">
-  <link href="http://cdn.bootcss.com/swagger-ui/3.0.19/swagger-ui.css" rel="stylesheet">
+  <link href="https://cdn.staticfile.org/swagger-ui/3.0.19/swagger-ui.css" rel="stylesheet">
 
   <style>
     html
@@ -74,8 +74,8 @@ const swaggerHTML = (apiPath: string) =>
 
   <div id="swagger-ui"></div>
 
-  <script src="http://cdn.bootcss.com/swagger-ui/3.0.19/swagger-ui-bundle.js"></script>
-  <script src="http://cdn.bootcss.com/swagger-ui/3.0.19/swagger-ui-standalone-preset.js"></script>
+  <script src="https://cdn.staticfile.org/swagger-ui/3.0.19/swagger-ui-bundle.js"></script>
+  <script src="https://cdn.staticfile.org/swagger-ui/3.0.19/swagger-ui-standalone-preset.js"></script>
   <script>
   window.onload = function() {
     // Build a system
