@@ -2,11 +2,11 @@
  * @Author: 吴占超
  * @Date: 2019-06-16 19:31:10
  * @Last Modified by: 吴占超
- * @Last Modified time: 2019-07-03 16:21:27
+ * @Last Modified time: 2019-07-05 16:00:30
  * 生成swagger json doc
  */
 import * as _ from 'lodash';
-import { WrapperOptions, IResponse } from './interface';
+import { WrapperOptions } from './interface';
 import createInit from './swagger-template';
 
 // const tagList = [];
@@ -34,7 +34,7 @@ const swaggerJSON = (options: WrapperOptions, apiObjects: any) => {
       path = `${prefix}${path}`.replace('//', '/');
       const summary = _.get(value, 'summary', '');
       const apiDescription = _.get(value, 'description', summary);
-      const responses: IResponse = {
+      const responses: any = {
         200: _.get(value, 'responses', { description: 'success' })
       };
       const {

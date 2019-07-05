@@ -41,11 +41,7 @@ export interface IApiObject {
   formData?: any;
   summary?: string;
   description?: string;
-  responses?: IResponse;
-}
-
-export interface IResponse {
-  [name: number]: any;
+  responses?: any;
 }
 
 export interface IMethodIn {
@@ -61,7 +57,7 @@ export interface IMethodIn {
   api: string;
   summary: string;
   description?: string;
-  responses?: IResponse;
+  responses?: any;
   auth?: string | string[];
 }
 
