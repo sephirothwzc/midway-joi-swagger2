@@ -2,11 +2,11 @@
  * @Author: 吴占超
  * @Date: 2019-06-16 19:11:39
  * @Last Modified by: 吴占超
- * @Last Modified time: 2019-07-03 16:10:01
+ * @Last Modified time: 2019-07-05 11:14:07
  */
 import { KoaMiddleware } from 'midway';
 
-export interface swaggerConfig {
+export interface ISwaggerConfig {
   title: string;
   description: string;
   version: string;

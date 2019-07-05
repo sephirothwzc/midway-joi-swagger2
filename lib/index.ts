@@ -2,13 +2,17 @@ import { wrapper } from './wrapper';
 import {
   SwaggerJoiController,
   SwaggerJoiGet,
-  SwaggerJoiPost
+  SwaggerJoiPost,
+  SwaggerJoiPut,
+  SwaggerJoiDel
 } from './swagger-joi-controller';
-import { swaggerConfig } from './interface';
+import { ISwaggerConfig } from './interface';
 export {
   wrapper,
   SwaggerJoiController,
   SwaggerJoiGet,
   SwaggerJoiPost,
-  swaggerConfig
+  SwaggerJoiPut,
+  SwaggerJoiDel,
+  ISwaggerConfig
 };
