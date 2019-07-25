@@ -13,7 +13,7 @@ const templateTest = (controller: IClassIn, options: WrapperOptions) => {
 
   const actionStr = _.chain(controller.actions).map(p => {
     // 判断参数
-    let param = undefined;
+    let param = '';
     if (p.body) {
       inlist.push(`${_.camelCase(p.summary)}In`);
       outlist.push(`${_.camelCase(p.summary)}Out`);
@@ -22,13 +22,17 @@ const templateTest = (controller: IClassIn, options: WrapperOptions) => {
     const paramMock = mock(schema as any);
     `;
     }
-    const auth = p.auth && `.set('${_.get(options, 'swaggerOptions.securityDefinitions.apikey.name')}',token)`;
-    return `it('${p.method} ${p.path}', async () => {
+    const auth = p.auth ? `.set('${_.get(options, 'swaggerOptions.securityDefinitions.apikey.name')}',token)` : '';
+    return `
+    /**
+     * ${p.description}
+     */
+    it('${p.method} ${p.path}', async () => {
     ${param}
     const result = await app
       .httpRequest()
-      .${p.method}('${p.path}')
-      ${param && `.send(paramMock)`}
+      .${p.method}('${controller.path}/${p.path}')
+      ${param ? `.send(paramMock)` : ''}
       ${auth};
     assert(result.status === 200);
     assert(result.body && ${_.camelCase(p.summary)}Out.validate(result.body).error === null);

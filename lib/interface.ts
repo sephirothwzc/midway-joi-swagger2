@@ -56,11 +56,14 @@ export interface IMethodIn {
   body?: any;
   formData?: any;
   api: string;
+  /**
+   * actionName
+   */
   summary: string;
   description?: string;
   responses?: any;
   auth?: string | string[];
-  method: string;
+  method?: string;
 }
 
 export interface IClassIn {
