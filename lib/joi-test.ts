@@ -1,4 +1,4 @@
-import { IClassIn } from "./interface";
+import { IClassIn, WrapperOptions } from "./interface";
 import templateTest from './template-test';
 
 /*

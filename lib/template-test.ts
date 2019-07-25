@@ -15,8 +15,8 @@ const templateTest = (controller: IClassIn, options: WrapperOptions) => {
     // 判断参数
     let param = undefined;
     if (p.body) {
-      inlist.push(`${p.summary}In`);
-      outlist.push(`${p.summary}Out`);
+      inlist.push(`${_.camelCase(p.summary)}In`);
+      outlist.push(`${_.camelCase(p.summary)}Out`);
       param = `
     const { swagger as schema } = j2s(${p.summary}In);
     const paramMock = mock(schema as any);
@@ -31,16 +31,16 @@ const templateTest = (controller: IClassIn, options: WrapperOptions) => {
       ${param && `.send(paramMock)`}
       ${auth};
     assert(result.status === 200);
-    assert(result.body && ${p.summary}Out.validate(result.body).error === null);
+    assert(result.body && ${_.camelCase(p.summary)}Out.validate(result.body).error === null);
   });`;
   }).value().join(`
   `);
 
-  const temp = `
+  return `
 import { app, assert } from 'midway-mock/bootstrap';
 import { findToken } from '../utils/auth-cache';
-import { ${inlist.join(',')} } from '../../../src/lib/schemas/${_.kebabCase(p)}';
-import { ${outlist.join(',')} } from '../../../src/lib/schemas/${_.kebabCase(p)}';
+import { ${inlist.join(',')} } from '../../../src/lib/schemas/${_.kebabCase(controller.api)}';
+import { ${outlist.join(',')} } from '../../../src/lib/schemas/${_.kebabCase(controller.api)}';
 import { mocks } from '../../mocks/mini-app';
 const j2s = require('joi-to-swagger');
 

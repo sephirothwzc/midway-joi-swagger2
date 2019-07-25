@@ -38,9 +38,11 @@ const handleSwagger = (router: Router, options: WrapperOptions) => {
       `${prefix}${swaggerJsonEndpoint}`.replace('//', '/')
     );
   });
-  router.get(swaggerTestEndpoint, async ctx => {
-    ctx.body = joiTest(controllerList, ctx.params.api, options);
-  });
+  if (options.test) {
+    router.get(swaggerTestEndpoint, async ctx => {
+      ctx.body = joiTest(controllerList, ctx.params.api, options);
+    });
+  }
 };
 
 /**

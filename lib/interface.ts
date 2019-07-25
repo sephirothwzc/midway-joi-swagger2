@@ -24,6 +24,7 @@ export interface WrapperOptions {
   swaggerHtmlEndpoint?: string;
   makeSwaggerRouter?: boolean;
   [param: string]: any;
+  test?: boolean;
 }
 
 export interface IApiObject {
