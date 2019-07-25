@@ -2,7 +2,7 @@
  * @Author: 吴占超
  * @Date: 2019-06-16 10:25:21
  * @Last Modified by: 吴占超
- * @Last Modified time: 2019-07-03 16:22:11
+ * @Last Modified time: 2019-07-25 15:54:10
  */
 
 import { controller, get, post, put, del } from 'midway';
@@ -17,6 +17,12 @@ import { addSchema, controllerSchema } from './joi-router';
  * 属性[controller]：[apiobject]
  */
 const apiObjects = {};
+
+/**
+ * 生成 test用
+ */
+const controllerList: IClassIn[] = [];
+const actionList: IMethodIn[] = [];
 
 /**
  * eg. /api/{id} -> /api/:id
@@ -122,6 +128,11 @@ const SwaggerJoiController = (paramIn: IClassIn): ClassDecorator => {
       paramIn.description && (apiObjects[p].tags = [paramIn.description]);
     });
   controllerSchema(paramIn.api, paramIn.path);
+  /**
+   * 组织controller
+   */
+  paramIn.actions = _.chain(actionList).filter(p => p.api === paramIn.api).value();
+  controllerList.push(paramIn);
   return controller(convertPath(paramIn.path), paramIn.routerOptions);
 };
 
@@ -153,21 +164,29 @@ const allSet = (paramIn: IMethodIn, method: string) => {
 };
 
 const SwaggerJoiGet = (paramIn: IMethodIn) => {
+  paramIn.method = 'get';
+  actionList.push(paramIn);
   const realPath = allSet(paramIn, 'get');
   return get(realPath, paramIn.routerOptions);
 };
 
 const SwaggerJoiPost = (paramIn: IMethodIn) => {
+  paramIn.method = 'post';
+  actionList.push(paramIn);
   const realPath = allSet(paramIn, 'post');
   return post(realPath, paramIn.routerOptions);
 };
 
 const SwaggerJoiPut = (paramIn: IMethodIn) => {
+  paramIn.method = 'put';
+  actionList.push(paramIn);
   const realPath = allSet(paramIn, 'put');
   return put(realPath, paramIn.routerOptions);
 };
 
 const SwaggerJoiDel = (paramIn: IMethodIn) => {
+  paramIn.method = 'del';
+  actionList.push(paramIn);
   const realPath = allSet(paramIn, 'del');
   return del(realPath, paramIn.routerOptions);
 };
@@ -178,5 +197,6 @@ export {
   SwaggerJoiPost,
   SwaggerJoiPut,
   SwaggerJoiDel,
-  apiObjects
+  apiObjects,
+  controllerList
 };

@@ -1,8 +1,8 @@
 Arguments: 
-  /usr/local/bin/node /usr/local/bin/yarn add tslint --save
+  /usr/local/bin/node /usr/local/bin/yarn add i --save
 
 PATH: 
-  /usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin
+  /usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/share/dotnet:~/.dotnet/tools:/Library/Frameworks/Mono.framework/Versions/Current/Commands
 
 Yarn version: 
   1.16.0
@@ -19,7 +19,7 @@ Trace:
 npm manifest: 
   {
     "name": "midway-joi-swagger2",
-    "version": "1.0.8",
+    "version": "1.0.29",
     "description": "midway joi swagger2 zhanchao.wu",
     "main": "index.js",
     "repository": {

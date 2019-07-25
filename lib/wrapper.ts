@@ -2,15 +2,16 @@
  * @Author: 吴占超
  * @Date: 2019-06-16 18:51:56
  * @Last Modified by: 吴占超
- * @Last Modified time: 2019-06-18 20:32:58
+ * @Last Modified time: 2019-07-25 11:52:13
  */
 import { Application, Router } from 'midway';
 import { WrapperOptions } from './interface';
 import * as _ from 'lodash';
 import swaggerHTML from './swagger-html';
 import swaggerJSON from './swagger-json';
-import { apiObjects } from './swagger-joi-controller';
+import { apiObjects, controllerList } from './swagger-joi-controller';
 import { schemas } from './joi-router';
+import joiTest from './joi-test';
 
 /**
  * swagger路由注册绑定
@@ -23,6 +24,8 @@ const handleSwagger = (router: Router, options: WrapperOptions) => {
     swaggerJsonEndpoint = '/swagger-json',
     // 声明html路由
     swaggerHtmlEndpoint = '/swagger-html',
+    // 声明test路由
+    swaggerTestEndpoint = '/unittest/:api',
     prefix = ''
   } = options;
 
@@ -34,6 +37,9 @@ const handleSwagger = (router: Router, options: WrapperOptions) => {
     ctx.body = swaggerHTML(
       `${prefix}${swaggerJsonEndpoint}`.replace('//', '/')
     );
+  });
+  router.get(swaggerTestEndpoint, async ctx => {
+    ctx.body = joiTest(controllerList, ctx.params.api, options);
   });
 };
 

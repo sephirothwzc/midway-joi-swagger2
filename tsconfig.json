@@ -24,9 +24,6 @@
       "dom"
     ]
   },
-  "include": [
-    "lib/*"
-  ],
   "exclude": [
     "app/public",
     "app/views",
