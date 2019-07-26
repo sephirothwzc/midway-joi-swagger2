@@ -1,5 +1,5 @@
 Arguments: 
-  /usr/local/bin/node /usr/local/bin/yarn add i --save
+  /usr/local/bin/node /usr/local/bin/yarn add json-schema-to-typescript --save
 
 PATH: 
   /usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/share/dotnet:~/.dotnet/tools:/Library/Frameworks/Mono.framework/Versions/Current/Commands
@@ -19,7 +19,7 @@ Trace:
 npm manifest: 
   {
     "name": "midway-joi-swagger2",
-    "version": "1.0.29",
+    "version": "1.0.32",
     "description": "midway joi swagger2 zhanchao.wu",
     "main": "index.js",
     "repository": {
@@ -39,6 +39,7 @@ npm manifest:
       "joi-to-swagger": "^3.1.0",
       "lodash": "^4.17.11",
       "midway": "^1.6.3",
+      "string-to-stream": "^2.0.0",
       "tslint": "^5.17.0"
     },
     "private": false,
@@ -3551,6 +3552,11 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/inherits/-/inherits-2.0.3.tgz#633c2c83e3da42a502f52466022480f4208261de"
     integrity sha1-Yzwsg+PaQqUC9SRmAiSA9CCCYd4=
   
+  inherits@^2.0.1:
+    version "2.0.4"
+    resolved "https://registry.npm.taobao.org/inherits/download/inherits-2.0.4.tgz#0fa2c64f932917c3433a0ded55363aae37416b7c"
+    integrity sha1-D6LGT5MpF8NDOg3tVTY6rjdBa3w=
+  
   ini@^1.3.4, ini@~1.3.0:
     version "1.3.5"
     resolved "https://registry.yarnpkg.com/ini/-/ini-1.3.5.tgz#eee25f56db1c9ec6085e0c22778083f596abf927"
@@ -5462,7 +5468,7 @@ Lockfile:
       isarray "0.0.1"
       string_decoder "~0.10.x"
   
-  readable-stream@3:
+  readable-stream@3, readable-stream@^3.4.0:
     version "3.4.0"
     resolved "https://registry.yarnpkg.com/readable-stream/-/readable-stream-3.4.0.tgz#a51c26754658e0a3c21dbf59163bd45ba6f447fc"
     integrity sha512-jItXPLmrSR8jmTRmRWJXCnGJsfy85mB3Wd/uINMXA65yrnFo0cPClFIUWzo2najVNSl+mx7/4W8ttlLWJe99pQ==
@@ -5998,6 +6004,14 @@ Lockfile:
     version "0.1.2"
     resolved "https://registry.yarnpkg.com/streamsearch/-/streamsearch-0.1.2.tgz#808b9d0e56fc273d809ba57338e929919a1a9f1a"
     integrity sha1-gIudDlb8Jz2Am6VzOOkpkZoanxo=
+  
+  string-to-stream@^2.0.0:
+    version "2.0.0"
+    resolved "https://registry.npm.taobao.org/string-to-stream/download/string-to-stream-2.0.0.tgz#8a361d3ccc2a9b734b901cc92d2f6d6f71311ba5"
+    integrity sha1-ijYdPMwqm3NLkBzJLS9tb3ExG6U=
+    dependencies:
+      inherits "^2.0.1"
+      readable-stream "^3.4.0"
   
   string-width@^1.0.1, string-width@^1.0.2:
     version "1.0.2"

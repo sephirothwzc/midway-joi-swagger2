@@ -8,7 +8,11 @@ import templateTest from './template-test';
  * @Last Modified time: 2019-07-25 11:52:24
  * 生成joi-swagger test
  */
-const joiTest = (controllerList: IClassIn[], apiName: string, options: WrapperOptions) => {
+export const joiTest = (controllerList: IClassIn[], apiName: string, options: WrapperOptions) => {
   return templateTest(controllerList.find(p => p.api === apiName), options);
 };
-export default joiTest;
+
+export const joiInterface = (controllerList: IClassIn[], apiName: string, options: WrapperOptions) => {
+  const citem = controllerList.find(p => p.api === apiName);
+
+};

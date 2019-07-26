@@ -11,7 +11,8 @@ import swaggerHTML from './swagger-html';
 import swaggerJSON from './swagger-json';
 import { apiObjects, controllerList } from './swagger-joi-controller';
 import { schemas } from './joi-router';
-import joiTest from './joi-test';
+import { joiTest, joiInterface } from './joi-to-file';
+import * as str from 'string-to-stream';
 
 /**
  * swagger路由注册绑定
@@ -26,6 +27,8 @@ const handleSwagger = (router: Router, options: WrapperOptions) => {
     swaggerHtmlEndpoint = '/swagger-html',
     // 声明test路由
     swaggerTestEndpoint = '/unittest/:api',
+    // 声明interface路由
+    swaggerInterfaceEndpoint = '/interface/:api',
     prefix = ''
   } = options;
 
@@ -40,7 +43,14 @@ const handleSwagger = (router: Router, options: WrapperOptions) => {
   });
   if (options.test) {
     router.get(swaggerTestEndpoint, async ctx => {
-      ctx.body = joiTest(controllerList, ctx.params.api, options);
+      ctx.attachment(`${_.kebabCase(ctx.params.api)}.test.ts`);
+      ctx.set('Content-Type', 'application/octet-stream');
+      ctx.body = str(joiTest(controllerList, ctx.params.api, options));
+    });
+    router.get(swaggerInterfaceEndpoint, async ctx => {
+      ctx.attachment(`${_.kebabCase(ctx.params.api)}.ts`);
+      ctx.set('Content-Type', 'application/octet-stream');
+      ctx.body = str(joiInterface(controllerList, ctx.params.api, options));
     });
   }
 };
