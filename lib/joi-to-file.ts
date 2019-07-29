@@ -1,5 +1,6 @@
 import { IClassIn, WrapperOptions } from "./interface";
 import templateTest from './template-test';
+import templateInterface from './template-interface';
 
 /*
  * @Author: 吴占超
@@ -14,5 +15,5 @@ export const joiTest = (controllerList: IClassIn[], apiName: string, options: Wr
 
 export const joiInterface = (controllerList: IClassIn[], apiName: string, options: WrapperOptions) => {
   const citem = controllerList.find(p => p.api === apiName);
-
+  return templateInterface(citem, options);
 };

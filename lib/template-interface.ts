@@ -5,7 +5,7 @@
  * @Last Modified time: 2019-07-25 16:51:59
  */
 import * as _ from 'lodash';
-import { IClassIn, WrapperOptions, IMethodIn } from './interface';
+import { IClassIn, WrapperOptions } from './interface';
 import { compile } from 'json-schema-to-typescript';
 import { JSONSchema4 } from 'json-schema';
 import * as j2s from 'joi-to-swagger';
@@ -18,13 +18,10 @@ const createInterface = async (param: any, name: string) => {
   return compile((swagger as JSONSchema4), name);
 };
 
-const templateInterface = async (controller: IClassIn, options: WrapperOptions) => {
-  const inlist = [];
-  const outlist = [];
+const templateInterface = async (controller: IClassIn, options: WrapperOptions): Promise<string> => {
 
-  const actionStr = _.chain(controller.actions).map(async p => {
+  return _.chain(controller.actions).map(async p => {
     // 判断参数
-    let param = '';
     let interfaceList = `
 ${await createInterface(p.body, `I${_.upperFirst(_.camelCase(p.summary))}In`)}
     `;
@@ -38,7 +35,7 @@ ${await createInterface(p.query, `I${_.upperFirst(_.camelCase(p.summary))}In`)}
 ${await createInterface(p.responses, `I${_.upperFirst(_.camelCase(p.summary))}Out`)}
     `;
     return interfaceList;
-  }).value();
+  }).value().join('\r\n');
 };
 
 export default templateInterface;
