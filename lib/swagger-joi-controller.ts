@@ -2,14 +2,14 @@
  * @Author: 吴占超
  * @Date: 2019-06-16 10:25:21
  * @Last Modified by: 吴占超
- * @Last Modified time: 2019-07-25 15:54:10
+ * @Last Modified time: 2019-07-29 14:37:09
  */
 
 import { controller, get, post, put, del } from 'midway';
 import * as _ from 'lodash';
 import { IApiObject, IMethodIn, IClassIn } from './interface';
 import * as j2s from 'joi-to-swagger';
-import { addSchema, controllerSchema } from './joi-router';
+import validate from './mid-validate';
 
 // import { IApiObject } from './interface';
 /**
@@ -127,7 +127,6 @@ const SwaggerJoiController = (paramIn: IClassIn): ClassDecorator => {
       );
       paramIn.description && (apiObjects[p].tags = [paramIn.description]);
     });
-  controllerSchema(paramIn.api, paramIn.path);
   /**
    * 组织controller
    */
@@ -154,19 +153,37 @@ const allSet = (paramIn: IMethodIn, method: string) => {
     responses: _responsesBody(paramIn.responses)
   });
   const realPath = convertPath(paramIn.path);
-  addSchema(`[${paramIn.api}]${realPath}-[${method}]`.replace('//', '/'), {
-    pathParams: paramIn.pathParams,
-    query: paramIn.pathParams,
-    body: paramIn.body,
-    formData: paramIn.formData
-  });
   return realPath;
+};
+
+const createSchemaMiddleware = (paramIn: IMethodIn) => {
+  const schemaName = [{ sname: 'body' }, { sname: 'pathParams', key: 'params' }, { sname: 'query' }, { sname: 'formData' }];
+  const schemaList = _(schemaName).filter(p => paramIn[p.sname]).map(p => {
+    return {
+      ctxkey: _.get(p, 'key', p.sname),
+      schemas: paramIn[p.sname]
+    };
+  }).value();
+  return validate(schemaList);
+};
+
+const paramInUpdMiddeware = (paramIn: IMethodIn) => {
+  const tempMidd = _.get(paramIn, 'routerOptions.middleware');
+  const validateMid = createSchemaMiddleware(paramIn);
+  if (_.isArray(tempMidd)) {
+    _.set(paramIn, 'routerOptions.middleware', [validateMid, ...tempMidd]);
+  } else if (_.isString(tempMidd)) {
+    _.set(paramIn, 'routerOptions.middleware', [validateMid, tempMidd]);
+  } else {
+    _.set(paramIn, 'routerOptions.middleware', [validateMid]);
+  }
 };
 
 const SwaggerJoiGet = (paramIn: IMethodIn) => {
   paramIn.method = 'get';
   actionList.push(paramIn);
   const realPath = allSet(paramIn, 'get');
+  paramInUpdMiddeware(paramIn);
   return get(realPath, paramIn.routerOptions);
 };
 
@@ -174,6 +191,7 @@ const SwaggerJoiPost = (paramIn: IMethodIn) => {
   paramIn.method = 'post';
   actionList.push(paramIn);
   const realPath = allSet(paramIn, 'post');
+  paramInUpdMiddeware(paramIn);
   return post(realPath, paramIn.routerOptions);
 };
 
@@ -181,6 +199,7 @@ const SwaggerJoiPut = (paramIn: IMethodIn) => {
   paramIn.method = 'put';
   actionList.push(paramIn);
   const realPath = allSet(paramIn, 'put');
+  paramInUpdMiddeware(paramIn);
   return put(realPath, paramIn.routerOptions);
 };
 
@@ -188,6 +207,7 @@ const SwaggerJoiDel = (paramIn: IMethodIn) => {
   paramIn.method = 'del';
   actionList.push(paramIn);
   const realPath = allSet(paramIn, 'del');
+  paramInUpdMiddeware(paramIn);
   return del(realPath, paramIn.routerOptions);
 };
 

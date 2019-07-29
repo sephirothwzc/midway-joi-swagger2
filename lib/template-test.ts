@@ -2,14 +2,14 @@
  * @Author: 吴占超
  * @Date: 2019-07-24 20:21:16
  * @Last Modified by: 吴占超
- * @Last Modified time: 2019-07-25 16:51:59
+ * @Last Modified time: 2019-07-29 14:41:05
  */
 import * as _ from 'lodash';
 import { IClassIn, WrapperOptions } from './interface';
 
 const templateTest = (controller: IClassIn, options: WrapperOptions) => {
-  const inlist = [];
-  const outlist = [];
+  const inlist: string[] = [];
+  const outlist: string[] = [];
 
   const actionStr = _.chain(controller.actions).map(p => {
     // 判断参数
@@ -18,7 +18,7 @@ const templateTest = (controller: IClassIn, options: WrapperOptions) => {
       inlist.push(`${_.camelCase(p.summary)}In`);
       outlist.push(`${_.camelCase(p.summary)}Out`);
       param = `
-    const { swagger as schema } = j2s(${p.summary}In);
+    const { swagger as schema } = j2s(${_.upperFirst(_.camelCase(p.summary))}In);
     const paramMock = mock(schema as any);
     `;
     }
@@ -35,7 +35,7 @@ const templateTest = (controller: IClassIn, options: WrapperOptions) => {
       ${param ? `.send(paramMock)` : ''}
       ${auth};
     assert(result.status === 200);
-    assert(result.body && ${_.camelCase(p.summary)}Out.validate(result.body).error === null);
+    assert(result.body && ${_.upperFirst(_.camelCase(p.summary))}Out.validate(result.body).error === null);
   });`;
   }).value().join(`
   `);
@@ -50,7 +50,7 @@ const j2s = require('joi-to-swagger');
 
 let token = undefined;
 
-describe('test/app/controller/mini-app.test.ts', () => {
+describe('test/app/controller/${_.kebabCase(controller.api)}.test.ts', () => {
   before(async () => {
     token = await findToken(app);
     mocks(app);

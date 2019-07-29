@@ -10,7 +10,6 @@ import * as _ from 'lodash';
 import swaggerHTML from './swagger-html';
 import swaggerJSON from './swagger-json';
 import { apiObjects, controllerList } from './swagger-joi-controller';
-import { schemas } from './joi-router';
 import { joiTest, joiInterface } from './joi-to-file';
 import * as str from 'string-to-stream';
 
@@ -74,8 +73,6 @@ const wrapper = (app: Application, options?: WrapperOptions) => {
   Object.assign(opts, options || {});
   const { router } = app;
   handleSwagger(router, opts);
-  // joi 绑定
-  app.joiSchemas = schemas;
 };
 
 export { wrapper };

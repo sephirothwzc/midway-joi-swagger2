@@ -2,7 +2,7 @@
  * @Author: 吴占超
  * @Date: 2019-07-24 20:21:16
  * @Last Modified by: 吴占超
- * @Last Modified time: 2019-07-25 16:51:59
+ * @Last Modified time: 2019-07-29 14:36:12
  */
 import * as _ from 'lodash';
 import { IClassIn, WrapperOptions } from './interface';
@@ -18,9 +18,8 @@ const createInterface = async (param: any, name: string) => {
   return compile((swagger as JSONSchema4), name);
 };
 
-const templateInterface = async (controller: IClassIn, options: WrapperOptions): Promise<string> => {
-
-  return _.chain(controller.actions).map(async p => {
+const templateInterface = async (controller: IClassIn | any, options: WrapperOptions): Promise<string> => {
+  const all = _.chain(controller.actions).map(async p => {
     // 判断参数
     let interfaceList = `
 ${await createInterface(p.body, `I${_.upperFirst(_.camelCase(p.summary))}In`)}
@@ -35,7 +34,9 @@ ${await createInterface(p.query, `I${_.upperFirst(_.camelCase(p.summary))}In`)}
 ${await createInterface(p.responses, `I${_.upperFirst(_.camelCase(p.summary))}Out`)}
     `;
     return interfaceList;
-  }).value().join('\r\n');
+  }).value();
+  const reustl = await Promise.all(all);
+  return reustl.join('\r\n').trim();
 };
 
 export default templateInterface;

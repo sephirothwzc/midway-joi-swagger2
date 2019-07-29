@@ -3,9 +3,6 @@
 项目地址：
 https://github.com/sephirothwzc/midway-joi-swagger2
 
-遗留问题：
-egg midway 不能获取到动态路由的原始路由 比如 /test2/3333 无法获取到 /test2/:id 如果有知道的大大，请指点小弟。谢谢！🙏
-
 - auth 需要对应到全局设置
 - 参数：pathParams、body、query、formData（不推荐）
 - https://github.com/hapijs/joi
@@ -18,6 +15,10 @@ https://github.com/Cody2333/egg-swagger-decorator
 
 1. app.ts 绑定 swagger 初始化配置（auth）
 2. 访问地址 [根目录]/swagger-html
+3. /interface/:api
+4. /unittest/:api
+5. api='controllerName'
+6. summary='actionName'
 
 ```app.ts
 import { wrapper } from 'midway-joi-swagger2';
@@ -40,6 +41,7 @@ export const joiSwagger = {
   title: 'Api平台',
   version: 'v1.0.0',
   description: '开发环境文档',
+  test:true,
   swaggerOptions: {
     securityDefinitions: {
       apikey: {
@@ -124,50 +126,9 @@ export const test2 = joi.object().keys({
 });
 ```
 
-中间件
+### 中间件
 
-```
-import * as joi from 'joi';
-import * as _ from 'lodash';
-const joiValidate = (param: any, schema: any) => {
-  return new Promise((resolve, reject) => {
-    !schema && resolve({ body: 'not schema' });
-    joi.validate(param, schema, (err, value) => {
-      if (err) {
-        reject(err);
-      }
-      resolve(value);
-    });
-  });
-};
-
-module.exports = () => {
-  return async function swaggerJoi(ctx, next) {
-    const key = `${ctx.path}-[${_.toLower(ctx.request.method)}]`;
-    if (!ctx.app.joiSchemas || !ctx.app.joiSchemas[key]) {
-      return next();
-    }
-    const schema = ctx.app.joiSchemas[key];
-    return joiValidate(ctx.request.body, schema.body)
-      .then(result => {
-        return joiValidate(ctx.query, schema.query);
-      })
-      .then(result => {
-        return joiValidate(ctx.params, schema.pathParams);
-      })
-      .then(result => {
-        return joiValidate(ctx.request.body, schema.formData);
-      })
-      .then(result => {
-        return next();
-      })
-      .catch(err => {
-        return ctx.throw(422, err);
-      });
-  };
-};
-
-```
+中间件已经集成在包内部，默认启动不允许关闭。
 
 ts 项目
 yarn build
