@@ -44,7 +44,8 @@ const handleSwagger = (router: Router, options: WrapperOptions) => {
     router.get(swaggerTestEndpoint, async ctx => {
       const templateString = joiTest(controllerList, ctx.params.api, options);
       if (templateString === false) {
-        ctx.throw(500, `not find [${ctx.params.api}]`);
+        ctx.status = 500;
+        return ctx.body = `not find [${ctx.params.api}]`;
       }
       ctx.attachment(`${_.kebabCase(ctx.params.api)}.test.ts`);
       ctx.set('Content-Type', 'application/octet-stream');
@@ -53,7 +54,8 @@ const handleSwagger = (router: Router, options: WrapperOptions) => {
     router.get(swaggerInterfaceEndpoint, async ctx => {
       const templateString = await joiInterface(controllerList, ctx.params.api, options);
       if (templateString === false) {
-        ctx.throw(500, `not find [${ctx.params.api}]`);
+        ctx.status = 500;
+        return ctx.body = `not find [${ctx.params.api}]`;
       }
       ctx.attachment(`${_.kebabCase(ctx.params.api)}.ts`);
       ctx.set('Content-Type', 'application/octet-stream');
