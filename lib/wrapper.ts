@@ -49,7 +49,7 @@ const handleSwagger = (router: Router, options: WrapperOptions) => {
     router.get(swaggerInterfaceEndpoint, async ctx => {
       ctx.attachment(`${_.kebabCase(ctx.params.api)}.ts`);
       ctx.set('Content-Type', 'application/octet-stream');
-      ctx.body = str(joiInterface(controllerList, ctx.params.api, options));
+      ctx.body = str(await joiInterface(controllerList, ctx.params.api, options));
     });
   }
 };

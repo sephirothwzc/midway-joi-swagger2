@@ -9,11 +9,11 @@ import templateInterface from './template-interface';
  * @Last Modified time: 2019-07-25 11:52:24
  * 生成joi-swagger test
  */
-export const joiTest = (controllerList: IClassIn[], apiName: string, options: WrapperOptions) => {
+export const joiTest = (controllerList: IClassIn[], apiName: string, options: WrapperOptions): string => {
   return templateTest(controllerList.find(p => p.api === apiName), options);
 };
 
-export const joiInterface = (controllerList: IClassIn[], apiName: string, options: WrapperOptions) => {
+export const joiInterface = async (controllerList: IClassIn[], apiName: string, options: WrapperOptions): Promise<string> => {
   const citem = controllerList.find(p => p.api === apiName);
   return templateInterface(citem, options);
 };
