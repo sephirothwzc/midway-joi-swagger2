@@ -143,8 +143,12 @@ const allSet = (paramIn: IMethodIn, method: string) => {
     tags: [paramIn.api],
     method,
     path: paramIn.path,
-    summary: paramIn.summary,
-    description: paramIn.description,
+    // summary: paramIn.summary,
+    // description: paramIn.description,
+    // #region 显示位置切换
+    summary: paramIn.description,
+    description: paramIn.summary,
+    // #endregion
     pathParams: _paramsList(paramIn.pathParams, 'path'),
     query: _paramsList(paramIn.query, 'query'),
     body: _paramsBody(paramIn.body),
