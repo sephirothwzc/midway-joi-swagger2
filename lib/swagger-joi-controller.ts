@@ -130,7 +130,9 @@ const SwaggerJoiController = (paramIn: IClassIn): ClassDecorator => {
   /**
    * 组织controller
    */
-  paramIn.actions = _.chain(actionList).filter(p => p.api === paramIn.api).value();
+  paramIn.actions = _.chain(actionList)
+    .filter(p => p.api === paramIn.api)
+    .value();
   controllerList.push(paramIn);
   return controller(convertPath(paramIn.path), paramIn.routerOptions);
 };
@@ -161,13 +163,22 @@ const allSet = (paramIn: IMethodIn, method: string) => {
 };
 
 const createSchemaMiddleware = (paramIn: IMethodIn) => {
-  const schemaName = [{ sname: 'body' }, { sname: 'pathParams', key: 'params' }, { sname: 'query' }, { sname: 'formData' }];
-  const schemaList = _(schemaName).filter(p => paramIn[p.sname]).map(p => {
-    return {
-      ctxkey: _.get(p, 'key', p.sname),
-      schemas: paramIn[p.sname]
-    };
-  }).value();
+  const schemaName = [
+    { sname: 'body', key: 'request.body' },
+    { sname: 'pathParams', key: 'params' },
+    { sname: 'query' },
+    { sname: 'formData' }
+  ];
+  const schemaList = _(schemaName)
+    .filter(p => paramIn[p.sname])
+    .map(p => {
+      return {
+        ctxkey: _.get(p, 'key', p.sname),
+        schemas: paramIn[p.sname]
+      };
+    })
+    .value();
+
   return validate(schemaList);
 };
 
