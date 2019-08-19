@@ -25,7 +25,7 @@ const validate = (
 ): KoaMiddleware => {
   return async (ctx: any, next: () => Promise<any>) => {
     const promiseAll = _(schemaList)
-      .map(p => joiValidate(ctx[p.ctxkey], p.schemas))
+      .map(p => joiValidate(_.get(ctx, p.ctxkey), p.schemas))
       .value();
     const result = await Promise.all(promiseAll)
       .then(resultAll => {
