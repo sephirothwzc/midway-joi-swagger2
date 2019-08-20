@@ -33,10 +33,10 @@ const templateTest = (controller: IClassIn, options: WrapperOptions) => {
           )}',token)`
         : '';
       return `
-    /**
-     * ${p.description}
-     */
-    it('${p.method} ${p.path}', async () => {
+  /**
+   * ${p.description}
+   */
+  it('${p.method} ${p.path}', async () => {
     ${param}
     const result = await app
       .httpRequest()
@@ -44,9 +44,11 @@ const templateTest = (controller: IClassIn, options: WrapperOptions) => {
       ${param ? `.send(paramMock)` : ''}
       ${auth};
     assert(result.status === 200);
-    assert(result.body && ${_.upperFirst(
+    assert(result.body);
+    const val = await S${_.upperFirst(
       _.camelCase(p.summary)
-    )}Out.validate(result.body).error === null);
+    )}Out.validate(result.body);
+    assert(!val.error);
   });`;
     })
     .value().join(`
@@ -55,13 +57,11 @@ const templateTest = (controller: IClassIn, options: WrapperOptions) => {
   return `
 import { app, assert } from 'midway-mock/bootstrap';
 import { findToken } from '../utils/auth-cache';
-import { ${inlist.join(',')} } from '../../../src/lib/schemas/${_.kebabCase(
-    controller.api
-  )}';
-import { ${outlist.join(',')} } from '../../../src/lib/schemas/${_.kebabCase(
-    controller.api
-  )}';
-import { mocks } from 'mock-json-schema';
+import { ${inlist.join(',')},${outlist.join(
+    ','
+  )} } from '../../../src/lib/schemas/${_.kebabCase(controller.api)}';
+import { mock } from 'mock-json-schema';
+// import mocksApi from '../../mocks/${_.kebabCase(controller.api)}';
 const j2s = require('joi-to-swagger');
 
 let token = undefined;
@@ -69,7 +69,7 @@ let token = undefined;
 describe('test/app/controller/${_.kebabCase(controller.api)}.test.ts', () => {
   before(async () => {
     token = await findToken(app);
-    mocks(app);
+    // mocksApi(app);
   });
   ${actionStr}
 });

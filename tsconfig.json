@@ -33,6 +33,6 @@
     "tsconfig.json"
   ],
   "include": [
-    "*/*"
+    "**/*"
   ]
 }
