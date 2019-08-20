@@ -8,7 +8,8 @@
 import { controller, get, post, put, del } from 'midway';
 import * as _ from 'lodash';
 import { IApiObject, IMethodIn, IClassIn } from './interface';
-import * as j2s from 'joi-to-swagger';
+// import * as j2s from 'joi-to-swagger';
+const j2s = require('joi-to-swagger');
 import validate from './mid-validate';
 
 // import { IApiObject } from './interface';
