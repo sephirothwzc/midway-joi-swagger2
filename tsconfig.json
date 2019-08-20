@@ -2,11 +2,6 @@
   "compileOnSave": true,
   "compilerOptions": {
     "baseUrl": ".",
-    "paths": {
-      "*": [
-        "types/*"
-      ]
-    },
     "target": "ES2017",
     "module": "commonjs",
     "moduleResolution": "node",
@@ -23,12 +18,5 @@
       "es2017",
       "dom"
     ]
-  },
-  "exclude": [
-    "app/public",
-    "app/views",
-    "dist",
-    "node_modules",
-    "test"
-  ]
+  }
 }
