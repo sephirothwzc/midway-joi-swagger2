@@ -19,9 +19,7 @@ const templateTest = (controller: IClassIn, options: WrapperOptions) => {
         inlist.push(`S${_.upperFirst(_.camelCase(p.summary))}In`);
         outlist.push(`S${_.upperFirst(_.camelCase(p.summary))}Out`);
         param = `
-    const { swagger as schema } = j2s(S${_.upperFirst(
-      _.camelCase(p.summary)
-    )}In);
+    const schema = j2s(S${_.upperFirst(_.camelCase(p.summary))}In).swagger;
     const paramMock = mock(schema as any);
     `;
       }
