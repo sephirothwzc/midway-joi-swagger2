@@ -2,7 +2,7 @@
  * @Author: 吴占超
  * @Date: 2019-06-16 10:25:21
  * @Last Modified by: 吴占超
- * @Last Modified time: 2019-07-29 14:37:09
+ * @Last Modified time: 2019-09-04 20:37:34
  */
 
 import { controller, get, post, put, del } from 'midway';
@@ -222,7 +222,7 @@ const SwaggerJoiPut = (paramIn: IMethodIn) => {
 const SwaggerJoiDel = (paramIn: IMethodIn) => {
   paramIn.method = 'del';
   actionList.push(paramIn);
-  const realPath = allSet(paramIn, 'del');
+  const realPath = allSet(paramIn, 'delete');
   paramInUpdMiddeware(paramIn);
   return del(realPath, paramIn.routerOptions);
 };
