@@ -120,7 +120,7 @@ const _addToApiObject = (key: any, apiObj: any, content: IApiObject) => {
 
 const SwaggerJoiController = (paramIn: IClassIn): ClassDecorator => {
   _.keys(apiObjects)
-    .filter(p => _.startsWith(p, `${paramIn.api}-`))
+    .filter(p => p.split('|')[0] === paramIn.api)
     .forEach(p => {
       apiObjects[p].path = `${paramIn.path}${apiObjects[p].path}`.replace(
         '//',
@@ -139,7 +139,7 @@ const SwaggerJoiController = (paramIn: IClassIn): ClassDecorator => {
 };
 
 const allSet = (paramIn: IMethodIn, method: string) => {
-  const key = `${paramIn.api}-${method}-${paramIn.path.replace('/', '_')}`;
+  const key = `${paramIn.api}|${method}-${paramIn.path.replace('/', '_')}`;
 
   _addToApiObject(key, apiObjects, {
     api: paramIn.api,
